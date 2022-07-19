@@ -1,2 +1,1 @@
-TOKEN = "OTEwNjY3OTA1NDAwNzI5NjUw.GljoeD.AGsr64RFGJTCzAj_tfJq-dUo73PJiBd4Az3mhI"
-PREFIX = "s!"
+PREFIX = "!"
