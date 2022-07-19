@@ -7,10 +7,10 @@ import os
 import random
 from dotenv import load_dotenv
 load_dotenv()
-TOKEN = os.getenv("TOKEN")
+TOKEN = os.getenv("TOKEN") #pip install dotenv
 
-import nextcord
-from nextcord import Client
+import nextcord #pip install nextcord
+from nextcord import Client #
 from nextcord import Intents
 from nextcord.ext import commands 
 Intents = nextcord.Intents.all()
@@ -19,6 +19,7 @@ import time
 client = commands.Bot(command_prefix='!', intents=Intents)
 Intents = nextcord.Intents.default()
 
+#When the Bot is ready it will print a ready message
 @client.event
 async def on_ready():
     print("\n / _ \ | |   |_   _| |_   _|  _  |  \/  | / __  \|  _  ||___  /\n/ /_\ \| |     | |     | | | | | | .  . | `' / /'| |_| |   / /\n|  _  || |     | |     | | | | | | |\/| |   / /  \____ |  / /  \n| | | || |_____| |_    | | \ \_/ / |  | | ./ /___.___/ /./ /  \n\_| |_/\_____/\___/    \_/  \___/\_|  |_/ \_____/\____/ \_/    \n                   By Alitom297#7175n")
@@ -26,7 +27,14 @@ async def on_ready():
     print('Bot is ready!')
     print(f'We have logged in as {client.user}')
 
+
 #COGS
+#This cog system loads and unloads commands
+
+cogs = ["moderation","music","owner"]
+for cog in cogs:
+    client.load_extension(f"cogs.{cog}")    #    await ctx.send(f"Loaded {extension}.")
+
 for fn in os.listdir("./cogs") and os.listdir("./cogs/slash"):
     if fn.endswith(".py"):
         client.load_extension(f"cogs.{fn[:-3]}")
@@ -45,12 +53,6 @@ async def unload(ctx, extension):
 async def reload(ctx, extension):
     client.reload_extension(f"cogs.{extension}")
     await ctx.send(f"Reloaded {extension}.")
-
-#More Cogs
-
-cogs = ["moderation","music","owner"]
-for cog in cogs:
-    client.load_extension(f"cogs.{cog}")    #    await ctx.send(f"Loaded {extension}.")
         
 #Commands    
 @client.command()
