@@ -1,0 +1,6 @@
+env
+.env
+dotenv
+node_modules
+.env
+git rm --cached .env
