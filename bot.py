@@ -1,11 +1,10 @@
-import nextcord #pip install nextcord
+import nextcord
 import os
 import random
 from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv("TOKEN") #pip install dotenv
 
-import nextcord #pip install nextcord
 from nextcord import Client #
 from nextcord import Intents
 from nextcord.ext import commands 
