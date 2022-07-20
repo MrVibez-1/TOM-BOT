@@ -1,2 +1,7 @@
 # Python-Disord-Bot
- This is a bot that will be created in python, I will be learning how to code along the way.
+This is a python bot which is created using nextcord. This bot is a userfriendly bot which will be moderation oriented.
+
+
+## CREDITS
+* [ ] Owner - Alitom297#7175
+* [ ] Helper - Kxffie#6889 (https://github.com/Kxffie/basic-discord-bot) Has his own version of this bot!

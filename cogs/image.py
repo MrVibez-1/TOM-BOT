@@ -1,4 +1,5 @@
 from nextcord.ext import commands
+import nextcord
 
 class Image(commands.Cog):
     def __init__(self, client):

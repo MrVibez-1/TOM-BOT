@@ -1,3 +1,4 @@
+from discord import Embed
 from nextcord.ext import commands
 import nextcord
 from config import alertsChannel
@@ -39,6 +40,13 @@ class Staff(commands.Cog):
         await member.ban(reason=reason)
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{member.mention} has been banned by {ctx.author.mention} for {reason}')
+
+    @commands.command()
+    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    async def purge(self, ctx, amount: int):
+        await ctx.channel.purge(limit=amount)
+        channel = self.client.get_channel(alertsChannel)
+        await channel.send(f'{ctx.author.mention} has purged {amount} messages')
 
 
 def setup(client):
