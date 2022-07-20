@@ -1,4 +1,3 @@
-from discord import Embed
 import nextcord #pip install nextcord
 import os
 import random
