@@ -1,3 +1,4 @@
+from ast import alias
 from discord import Embed
 from nextcord.ext import commands
 import nextcord
@@ -9,7 +10,7 @@ class Staff(commands.Cog):
         self.client = client
         super().__init__()
 
-    @commands.command()
+    @commands.command(aliases=['boot'])
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def kick(self, ctx, member: nextcord.Member, *, reason=None):
         embed = nextcord.Embed(title="Kicked Player", color=nextcord.Color.red())
@@ -25,7 +26,7 @@ class Staff(commands.Cog):
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{member.mention} has been kicked by {ctx.author.mention} for {reason}')
 
-    @commands.command()
+    @commands.command(aliases=['smite'])
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def ban(self, ctx, member: nextcord.Member, *, reason=None):
         embed = nextcord.Embed(title="Banned Player", color=nextcord.Color.red())

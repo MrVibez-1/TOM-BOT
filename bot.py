@@ -1,3 +1,4 @@
+from discord import Embed
 import nextcord #pip install nextcord
 import os
 import random
@@ -6,18 +7,19 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN") #pip install dotenv
 
 import nextcord #pip install nextcord
-from nextcord import Client #
+from nextcord import Client 
 from nextcord import Intents
 from nextcord.ext import commands 
 Intents = nextcord.Intents.all()
 import time
-client = commands.Bot(command_prefix='!', intents=Intents)
+client = commands.Bot(command_prefix='-', intents=Intents)
 Intents = nextcord.Intents.default()
+client.remove_command('help')
 
 #When the Bot is ready it will print a ready message
 @client.event
 async def on_ready():
-    await client.change_presence(activity=nextcord.Game(name="Cheese"))
+    await client.change_presence(activity=nextcord.Game(name="Prefix: -"))
     print("\n / _ \ | |   |_   _| |_   _|  _  |  \/  | / __  \|  _  ||___  /\n/ /_\ \| |     | |     | | | | | | .  . | `' / /'| |_| |   / /\n|  _  || |     | |     | | | | | | |\/| |   / /  \____ |  / /  \n| | | || |_____| |_    | | \ \_/ / |  | | ./ /___.___/ /./ /  \n\_| |_/\_____/\___/    \_/  \___/\_|  |_/ \_____/\____/ \_/    \n                   By Alitom297#7175n")
     time.sleep(2)
     print('Bot is ready!')
@@ -28,7 +30,6 @@ async def on_ready():
 #COGS
 #This cog system loads and unloads commands
 
-    
 for fn in os.listdir("./cogs"):
     if fn.endswith(".py"):
         client.load_extension(f"cogs.{fn[:-3]}")
@@ -83,11 +84,12 @@ async def on_member_leave(member):
 
 
 @client.command()
-async def Help(ctx):
+async def help(ctx):
     Embed = nextcord.embeds.Embed(title="Help", description="This is a list of commands", color=0x00ff00)
     Embed.add_field(name="!help", value="Shows this message")
     Embed.add_field(name="!ping", value="Pong!")
-    Embed.add_field(name="!embed", value="Sends an embed")
+    Embed.add_field(name="!weather", value="Shows the weather for a city")
+    Embed.add_field(name="!embed", value="Shows an embed")
     Embed.add_field(name="!load", value="Loads a cog")
     Embed.add_field(name="!unload", value="Unloads a cog")
     Embed.add_field(name="!reload", value="Reloads a cog")
