@@ -48,6 +48,11 @@ class Staff(commands.Cog):
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{ctx.author.mention} has purged {amount} messages')
 
+    @commands.command(aliases=['esay', 'say'])
+    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    async def embed(self, ctx, *, message):
+        await ctx.send(embed=nextcord.embeds.Embed(title="Embed", description=message, color=0x00ff00))
+
 
 def setup(client):
     client.add_cog(Staff(client))

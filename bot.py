@@ -1,3 +1,5 @@
+from ast import alias
+from discord import Embed, Guild
 import nextcord
 import os
 import random
@@ -14,6 +16,7 @@ client = commands.Bot(command_prefix='-', intents=Intents)
 Intents = nextcord.Intents.default()
 client.remove_command('help')
 
+
 #When the Bot is ready it will print a ready message
 @client.event
 async def on_ready():
@@ -22,6 +25,18 @@ async def on_ready():
     time.sleep(2)
     print('Bot is ready!')
     print(f'We have logged in as {client.user}')
+    client.load_extension('dismusic')
+
+client.lavalink_nodes = [
+    {"host": "lava.link", "port": 80, "password": "test", "region": "eu",},
+    # Can have multiple nodes here
+]
+
+# If you want to use spotify search
+client.spotify_credentials = {
+    'client_id': '1b16502d5b4e47a2a40c8f71bb39aad8',
+    'client_secret': 'd0a1afd98c404a6584870dc170e2e334'
+}
     
 
 
@@ -83,14 +98,16 @@ async def on_member_leave(member):
 #Help Command
 @client.command()
 async def help(ctx):
-    Embed = nextcord.embeds.Embed(title="Help", description="This is a list of commands", color=0x00ff00)
-    Embed.add_field(name="!help", value="Shows this message")
-    Embed.add_field(name="!ping", value="Pong!")
-    Embed.add_field(name="!weather", value="Shows the weather for a city")
-    Embed.add_field(name="!embed", value="Shows an embed")
-    Embed.add_field(name="!load", value="Loads a cog")
-    Embed.add_field(name="!unload", value="Unloads a cog")
-    Embed.add_field(name="!reload", value="Reloads a cog")
+    Embed = nextcord.embeds.Embed(title="Help", description="This is a list of commands for **Council of Goombingo**", color=random.randint(0, 0xffffff))
+    Embed.add_field(name="👑 ADMIN", value="```Shows this message```", inline=False)
+    Embed.add_field(name="🔧 MODERATION", value="```Kick, Ban, Embed```", inline=False)
+    Embed.add_field(name="🎶 MUSIC", value="```Connect, disconnect, play, pause, resume, seek, nowplaying, queue, volume, loop```", inline=False)
+    Embed.add_field(name="✨ FUN", value="```Shows this message```", inline=False)
+    Embed.add_field(name="📷 IMAGES", value="```Shows this message```", inline=False)
+    Embed.add_field(name="📚 INFO", value="```Shows this message```", inline=False)
+    Embed.add_field(name="🤖 UTILITY", value="```Shows this message```", inline=False)
     await ctx.send(embed=Embed)
+
+#Muic Function
     
 client.run(TOKEN)
