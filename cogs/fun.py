@@ -2,7 +2,6 @@ from nextcord.ext import commands
 import nextcord
 import random
 
-
 class Fun(commands.Cog):
     def __init__(self, client):
         super().__init__()
@@ -14,6 +13,10 @@ class Fun(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         await ctx.send(f"Pong!")
+
+    @commands.command()
+    async def weather(self, ctx, *, city):
+        await ctx.send(f"Weather for {city}")
 
 
 def setup(client):
