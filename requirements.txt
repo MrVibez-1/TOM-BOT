@@ -1,6 +1,0 @@
-json
-sys
-nextcord
-os
-random
-dotenv

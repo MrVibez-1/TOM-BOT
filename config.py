@@ -1,1 +1,1 @@
-PREFIX = "!"
+alertsChannel = 909147387430334504
