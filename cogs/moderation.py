@@ -22,7 +22,6 @@ class Staff(commands.Cog):
         await ctx.send(embed=embed)
         
         await member.kick(reason=reason)
-        await member.send(embed=embed)
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{member.mention} has been kicked by {ctx.author.mention} for {reason}')
 
@@ -42,10 +41,10 @@ class Staff(commands.Cog):
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{member.mention} has been banned by {ctx.author.mention} for {reason}')
 
-    @commands.command()
+    @commands.command(aliases=['clear'])
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def purge(self, ctx, amount: int):
-        await ctx.channel.purge(limit=amount)
+        await ctx.channel.purge(limit=amount + 1)
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{ctx.author.mention} has purged {amount} messages')
 
