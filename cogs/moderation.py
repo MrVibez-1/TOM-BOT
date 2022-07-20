@@ -1,39 +1,44 @@
 from nextcord.ext import commands
 import nextcord
+from config import alertsChannel
 
 
 class Staff(commands.Cog):
     def __init__(self, client):
+        self.client = client
         super().__init__()
 
     @commands.command()
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
-    async def kick(self, ctx, member: None, *, reason=None):
+    async def kick(self, ctx, member: nextcord.Member, *, reason=None):
+        embed = nextcord.Embed(title="Kicked Player", color=nextcord.Color.red())
+        embed.add_field(name="Player", value=member.mention, inline=False)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.set_footer(text=f"Kicked by {ctx.author}")
+        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
+        embed.set_thumbnail(url=member.avatar)
+        await ctx.send(embed=embed)
+        await member.send(embed=embed)
+        
         await member.kick(reason=reason)
-        await ctx.send(f'Kicked {member.mention}')
-        await member.send(f'You have been kicked from {ctx.guild.name} for {reason}')
-        print(f'{member.name} has been kicked from {ctx.guild.name} for {reason}')
+        channel = self.client.get_channel(alertsChannel)
+        await channel.send(f'{member.mention} has been kicked by {ctx.author.mention} for {reason}')
 
     @commands.command()
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
-    async def ban(self, ctx, member: None, *, reason=None):
+    async def ban(self, ctx, member: nextcord.Member, *, reason=None):
+        embed = nextcord.Embed(title="Banned Player", color=nextcord.Color.red())
+        embed.add_field(name="Player", value=member.mention, inline=False)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.set_footer(text=f"Banned by {ctx.author}")
+        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
+        embed.set_thumbnail(url=member.avatar)
+        await ctx.send(embed=embed)
+        await member.send(embed=embed)
+        
         await member.ban(reason=reason)
-        await ctx.send(f'Banned {member.mention}')
-        await member.send(f'You have been banned from {ctx.guild.name} for {reason}')
-        print(f'{member.name} has been banned from {ctx.guild.name} for {reason}')
-
-    @commands.command()
-    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
-    async def unban(self, ctx, member: None, *, reason=None):
-        await ctx.guild.unban(member, reason=reason)
-        await ctx.send(f'Unbanned {member.mention}')
-        await member.send(f'You have been unbanned from {ctx.guild.name} for {reason}')
-        print(f'{member.name} has been unbanned from {ctx.guild.name} for {reason}')
-
-    @commands.command()
-    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
-    async def embed(self, ctx, *, message):
-        await ctx.send(embed=nextcord.embeds.Embed(title="Embed", description=message, color=0x00ff00))
+        channel = self.client.get_channel(alertsChannel)
+        await channel.send(f'{member.mention} has been banned by {ctx.author.mention} for {reason}')
 
 
 def setup(client):

@@ -17,7 +17,7 @@ Intents = nextcord.Intents.default()
 #When the Bot is ready it will print a ready message
 @client.event
 async def on_ready():
-    await client.change_presence(activity=nextcord.Game(name="!help"))
+    await client.change_presence(activity=nextcord.Game(name="Cheese"))
     print("\n / _ \ | |   |_   _| |_   _|  _  |  \/  | / __  \|  _  ||___  /\n/ /_\ \| |     | |     | | | | | | .  . | `' / /'| |_| |   / /\n|  _  || |     | |     | | | | | | |\/| |   / /  \____ |  / /  \n| | | || |_____| |_    | | \ \_/ / |  | | ./ /___.___/ /./ /  \n\_| |_/\_____/\___/    \_/  \___/\_|  |_/ \_____/\____/ \_/    \n                   By Alitom297#7175n")
     time.sleep(2)
     print('Bot is ready!')
@@ -60,10 +60,6 @@ async def reload(ctx, extension):
     except Exception as e:
         await ctx.send(f"Error loading {extension}: {e}")
         
-#Commands    
-@client.command()
-async def ping(ctx):
-    await ctx.send("Pong! {}ms".format(round(client.latency * 1000)))   
 
 #Command Error
 @client.event
@@ -84,5 +80,17 @@ async def on_member_leave(member):
     channel = client.get_channel(909105318276005919)
     Embed = nextcord.embeds.Embed(title="Goodbye!", description=f"{member.mention} has left the server!", color=0xFF0000)
     await channel.send(embed=Embed)
+
+
+@client.command()
+async def Help(ctx):
+    Embed = nextcord.embeds.Embed(title="Help", description="This is a list of commands", color=0x00ff00)
+    Embed.add_field(name="!help", value="Shows this message")
+    Embed.add_field(name="!ping", value="Pong!")
+    Embed.add_field(name="!embed", value="Sends an embed")
+    Embed.add_field(name="!load", value="Loads a cog")
+    Embed.add_field(name="!unload", value="Unloads a cog")
+    Embed.add_field(name="!reload", value="Reloads a cog")
+    await ctx.send(embed=Embed)
     
 client.run(TOKEN)
