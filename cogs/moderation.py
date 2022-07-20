@@ -19,9 +19,9 @@ class Staff(commands.Cog):
         embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
         embed.set_thumbnail(url=member.avatar)
         await ctx.send(embed=embed)
-        await member.send(embed=embed)
         
         await member.kick(reason=reason)
+        await member.send(embed=embed)
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{member.mention} has been kicked by {ctx.author.mention} for {reason}')
 
@@ -35,9 +35,9 @@ class Staff(commands.Cog):
         embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
         embed.set_thumbnail(url=member.avatar)
         await ctx.send(embed=embed)
-        await member.send(embed=embed)
         
         await member.ban(reason=reason)
+        
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{member.mention} has been banned by {ctx.author.mention} for {reason}')
 
