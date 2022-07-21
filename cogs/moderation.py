@@ -1,5 +1,5 @@
 from ast import alias
-from discord import Embed
+from discord import Embed, Guild, Role
 from nextcord.ext import commands
 import nextcord
 from config import alertsChannel
@@ -48,10 +48,54 @@ class Staff(commands.Cog):
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{ctx.author.mention} has purged {amount} messages')
 
-    @commands.command(aliases=['esay', 'say'])
+    @commands.command(aliases=['esay', 'say', 'quote'])
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def embed(self, ctx, *, message):
         await ctx.send(embed=nextcord.embeds.Embed(title="Embed", description=message, color=0x00ff00))
+
+    @commands.command(aliases=[''])
+    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    async def warn(self, ctx, member: nextcord.Member, *, reason=None):
+        embed = nextcord.Embed(title="Warned Player", color=nextcord.Color.red())
+        embed.add_field(name="Player", value=member.mention, inline=False)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.set_footer(text=f"Warned by {ctx.author}")
+        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
+        embed.set_thumbnail(url=member.avatar)
+        await ctx.send(embed=embed)
+        channel = self.client.get_channel(alertsChannel)
+        await channel.send(f'{member.mention} has been warned by {ctx.author.mention} for {reason}')
+
+    @commands.command(aliass=['shush'])
+    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    async def mute(self, ctx, member: nextcord.Member, *, reason=None):
+        Guild = ctx.guild
+        await member.add_roles(Guild.get_role(909158897577754634))
+        embed = nextcord.Embed(title="Muted Player", color=nextcord.Color.red())
+        embed.add_field(name="Player", value=member.mention, inline=False)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.set_footer(text=f"Muted by {ctx.author}")
+        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
+        embed.set_thumbnail(url=member.avatar)
+        await ctx.send(embed=embed)
+        channel = self.client.get_channel(alertsChannel)
+        await channel.send(f'{member.mention} has been muted by {ctx.author.mention} for {reason}')
+
+    @commands.command()
+    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    async def unmute(self, ctx, member: nextcord.Member, *, reason=None):
+        Guild = ctx.guild
+        await member.remove_roles(Guild.get_role(909158897577754634))
+        embed = nextcord.Embed(title="Unmuted Player", color=nextcord.Color.red())
+        embed.add_field(name="Player", value=member.mention, inline=False)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.set_footer(text=f"Unmuted by {ctx.author}")
+        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
+        embed.set_thumbnail(url=member.avatar)
+        await ctx.send(embed=embed)
+        channel = self.client.get_channel(alertsChannel)
+        await channel.send(f'{member.mention} has been unmuted by {ctx.author.mention} for {reason}')
+
 
 
 def setup(client):

@@ -99,8 +99,8 @@ async def on_member_leave(member):
 @client.command()
 async def help(ctx):
     Embed = nextcord.embeds.Embed(title="Help", description="This is a list of commands for **Council of Goombingo**", color=random.randint(0, 0xffffff))
-    Embed.add_field(name="👑 ADMIN", value="```Shows this message```", inline=False)
-    Embed.add_field(name="🔧 MODERATION", value="```Kick, Ban, Embed```", inline=False)
+    Embed.add_field(name="👑 ADMIN", value="```DM, Roleadd, Roleremove```", inline=False)
+    Embed.add_field(name="🔧 MODERATION", value="```Kick, Ban, Embed, Warn, Mute, Unmute```", inline=False)
     Embed.add_field(name="🎶 MUSIC", value="```Connect, disconnect, play, pause, resume, seek, nowplaying, queue, volume, loop```", inline=False)
     Embed.add_field(name="✨ FUN", value="```Shows this message```", inline=False)
     Embed.add_field(name="📷 IMAGES", value="```Shows this message```", inline=False)
