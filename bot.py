@@ -108,7 +108,7 @@ async def help(ctx):
     Embed.add_field(name="📷 IMAGES", value="```Meme, pcomment, ytcomment```", inline=False)
     Embed.add_field(name="📚 INFO", value="```Shows this message```", inline=False)
     Embed.add_field(name="🤖 UTILITY", value="```Shows this message```", inline=False)
-    Embed.add_field(name="🤖 NSFW", value="```nsfw, ass , boobs, hentai```", inline=False)
+    Embed.add_field(name="🔞 NSFW", value="```nsfw, ass , boobs, hentai```", inline=False)
     await ctx.send(embed=Embed)
 
 #REDDIT COMMANDS
