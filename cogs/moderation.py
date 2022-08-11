@@ -53,7 +53,7 @@ class Staff(commands.Cog):
     async def embed(self, ctx, *, message):
         await ctx.send(embed=nextcord.embeds.Embed(title="Embed", description=message, color=0x00ff00))
 
-    @commands.command(aliases=[''])
+    @commands.command(aliases=['warn'])
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def warn(self, ctx, member: nextcord.Member, *, reason=None):
         embed = nextcord.Embed(title="Warned Player", color=nextcord.Color.red())
