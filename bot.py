@@ -6,13 +6,23 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv("TOKEN") #pip install dotenv
 
-from nextcord import Client #
-from nextcord import Intents
+from nextcord import Client , Intents, Embed
 from nextcord.ext import commands 
 Intents = nextcord.Intents.all()
 client = commands.Bot(command_prefix='-', intents=Intents)
-Intents = nextcord.Intents.default()
 client.remove_command('help')
+
+import praw
+
+reddit = praw.Reddit(client_id="1NEAW_5USLdODfdYCjwibw", client_secret="-jXfWNPUjUiAb-bFgJ0KKhEUUgT3UQ", user_agent="Alitom297#7175")
+
+@client.command()
+async def meme(ctx, subreddit: str):
+    subreddit = reddit.subreddit(subreddit.lower())
+    posts = subreddit.hot(limit=100)
+    post = random.choice([post for post in posts if post.url.endswith(".jpg") or post.url.endswith(".png")])
+    await ctx.send(post.url)
+
 
 
 #When the Bot is ready it will print a ready message
@@ -82,7 +92,23 @@ async def reload(ctx, extension):
 #Command Error
 @client.event
 async def on_command_error(ctx, error):
-    await ctx.send(f"Error: {error}")
+    Embed = nextcord.embeds.Embed(title="Error", description=f"Error: {error}", color=0xFF0000)
+    await ctx.send(embed=Embed)
+
+#Help Command
+@client.command()
+async def help(ctx):
+    Embed = nextcord.embeds.Embed(title="Help", description="This is a list of commands for **Council of Goombingo**", color=random.randint(0, 0xffffff))
+    Embed.add_field(name="👑 ADMIN", value="```Prefix, DM, Roleadd, Roleremove```", inline=False)
+    Embed.add_field(name="🔧 MODERATION", value="```Kick, Ban, Embed, Warn, Mute, Unmute```", inline=False)
+    Embed.add_field(name="🎶 MUSIC", value="```Connect, disconnect, play, pause, resume, seek, nowplaying, queue, volume, loop```", inline=False)
+    Embed.add_field(name="✨ FUN", value="```Ping, Weather```", inline=False)
+    Embed.add_field(name="📷 IMAGES", value="```Meme, pcomment, ytcomment```", inline=False)
+    Embed.add_field(name="📚 INFO", value="```Shows this message```", inline=False)
+    Embed.add_field(name="🤖 UTILITY", value="```Shows this message```", inline=False)
+    Embed.add_field(name="🔞 NSFW", value="```no```", inline=False)
+    await ctx.send(embed=Embed)
+
 
 #JOIN/LEAVE     
 @client.event
@@ -99,18 +125,15 @@ async def on_member_leave(member):
     Embed = nextcord.embeds.Embed(title="Goodbye!", description=f"{member.mention} has left the server!", color=0xFF0000)
     await channel.send(embed=Embed)
 
-#Help Command
+#Change Prefix
 @client.command()
-async def help(ctx):
-    Embed = nextcord.embeds.Embed(title="Help", description="This is a list of commands for **Council of Goombingo**", color=random.randint(0, 0xffffff))
-    Embed.add_field(name="👑 ADMIN", value="```DM, Roleadd, Roleremove```", inline=False)
-    Embed.add_field(name="🔧 MODERATION", value="```Kick, Ban, Embed, Warn, Mute, Unmute```", inline=False)
-    Embed.add_field(name="🎶 MUSIC", value="```Connect, disconnect, play, pause, resume, seek, nowplaying, queue, volume, loop```", inline=False)
-    Embed.add_field(name="✨ FUN", value="```Ping, Weather```", inline=False)
-    Embed.add_field(name="📷 IMAGES", value="```Meme, pcomment, ytcomment```", inline=False)
-    Embed.add_field(name="📚 INFO", value="```Shows this message```", inline=False)
-    Embed.add_field(name="🤖 UTILITY", value="```Shows this message```", inline=False)
-    Embed.add_field(name="🔞 NSFW", value="```no```", inline=False)
+async def prefix(ctx, new_prefix: str):
+    if not ctx.author.guild_permissions.manage_guild:
+        return
+
+    client.command_prefix = new_prefix
+
+    Embed = nextcord.embeds.Embed(title="Changed prefix", description=f"Changed prefix to {new_prefix}", color=0x00ff00)
     await ctx.send(embed=Embed)
-    
+
 client.run(TOKEN)
