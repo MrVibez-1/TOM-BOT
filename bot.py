@@ -93,7 +93,7 @@ async def on_command_error(ctx, error):
 async def on_member_join(member):
     channel = client.get_channel(909105318276005919)
     Embed = nextcord.embeds.Embed(title="Welcome to the server!", description=f"{member.mention} has joined the server!", color=0x00ff00)
-    Embed.set_thumbnail(url="https://media.tenor.com/GIjIHvf3tq0AAAAC/my-nigga-high-five.gif")
+    Embed.set_thumbnail(url="hhttps://media.tenor.com/GIjIHvf3tq0AAAAC/my-nigga-high-five.gif")
     Embed.add_field(name="Member Count", value=f"{len(member.guild.members)}")
     await channel.send(embed=Embed)
 
