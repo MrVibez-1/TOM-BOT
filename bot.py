@@ -22,8 +22,8 @@ async def on_ready():
     print("\n / _ \ | |   |_   _| |_   _|  _  |  \/  | / __  \|  _  ||___  /\n/ /_\ \| |     | |     | | | | | | .  . | `' / /'| |_| |   / /\n|  _  || |     | |     | | | | | | |\/| |   / /  \____ |  / /  \n| | | || |_____| |_    | | \ \_/ / |  | | ./ /___.___/ /./ /  \n\_| |_/\_____/\___/    \_/  \___/\_|  |_/ \_____/\____/ \_/    \n                   By Alitom297#7175n")
     print('Bot is ready!')
     print(f'We have logged in as {client.user}')
-    client.load_extension('dismusic')
-
+    
+client.load_extension("dismusic")
 client.lavalink_nodes = [
     {"host": "lava.link", "port": 80, "password": "test", "region": "eu",},
     # Can have multiple nodes here
