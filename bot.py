@@ -1,6 +1,4 @@
 from ast import alias
-from unicodedata import name
-from discord import Embed, Guild
 import nextcord
 import os
 import random
@@ -12,7 +10,6 @@ from nextcord import Client #
 from nextcord import Intents
 from nextcord.ext import commands 
 Intents = nextcord.Intents.all()
-import time
 client = commands.Bot(command_prefix='-', intents=Intents)
 Intents = nextcord.Intents.default()
 client.remove_command('help')
@@ -23,7 +20,6 @@ client.remove_command('help')
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(name="pornhub", type=nextcord.ActivityType.streaming, url="https://www.twitch.tv/mrvibez_1"))
     print("\n / _ \ | |   |_   _| |_   _|  _  |  \/  | / __  \|  _  ||___  /\n/ /_\ \| |     | |     | | | | | | .  . | `' / /'| |_| |   / /\n|  _  || |     | |     | | | | | | |\/| |   / /  \____ |  / /  \n| | | || |_____| |_    | | \ \_/ / |  | | ./ /___.___/ /./ /  \n\_| |_/\_____/\___/    \_/  \___/\_|  |_/ \_____/\____/ \_/    \n                   By Alitom297#7175n")
-    time.sleep(2)
     print('Bot is ready!')
     print(f'We have logged in as {client.user}')
     client.load_extension('dismusic')
