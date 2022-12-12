@@ -1,5 +1,4 @@
 from ast import alias
-from discord import Embed
 from nextcord.ext import commands
 import nextcord
 import random

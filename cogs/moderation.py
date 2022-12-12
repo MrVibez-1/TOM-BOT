@@ -1,5 +1,4 @@
 from ast import alias
-from discord import Embed, Guild, Role
 from nextcord.ext import commands
 import nextcord
 from config import alertsChannel
