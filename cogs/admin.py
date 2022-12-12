@@ -19,7 +19,13 @@ class Admin(commands.Cog):
         Embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
         Embed.set_thumbnail(url=user.avatar)
         await ctx.send(embed=Embed)
-        await user.send(message)
+        Embed = nextcord.Embed(title=f"You have been dm'd by {ctx.author}", color=nextcord.Color.blue())
+        Embed.add_field(name="Message", value=message, inline=False)
+        Embed.set_footer(text=f"DM'd by {ctx.author}")
+        Embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
+        Embed.set_thumbnail(url=user.avatar)
+        await user.send(embed=Embed)
+
 
     @commands.command(aliass=[''])
     @commands.has_any_role("KING", "ADMIN", "CABBAGE")

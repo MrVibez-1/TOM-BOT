@@ -10,7 +10,7 @@ class Staff(commands.Cog):
         self.client = client
         super().__init__()
 
-    @commands.command(aliases=['boot'])
+    @commands.command()
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def kick(self, ctx, member: nextcord.Member, *, reason=None):
         embed = nextcord.Embed(title="Kicked Player", color=nextcord.Color.red())
@@ -23,9 +23,13 @@ class Staff(commands.Cog):
         
         await member.kick(reason=reason)
         channel = self.client.get_channel(alertsChannel)
-        await channel.send(f'{member.mention} has been kicked by {ctx.author.mention} for {reason}')
+        embed = nextcord.Embed(title=f"{member.name} was kicked", color=nextcord.Color.red())
+        embed.set_thumbnail(url=member.avatar)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.add_field(name="Kicked by", value=ctx.author.mention, inline=False)
+        await channel.send(embed=embed)
 
-    @commands.command(aliases=['smite'])
+    @commands.command()
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def ban(self, ctx, member: nextcord.Member, *, reason=None):
         embed = nextcord.Embed(title="Banned Player", color=nextcord.Color.red())
@@ -37,23 +41,28 @@ class Staff(commands.Cog):
         await ctx.send(embed=embed)
         
         await member.ban(reason=reason)
-        
         channel = self.client.get_channel(alertsChannel)
-        await channel.send(f'{member.mention} has been banned by {ctx.author.mention} for {reason}')
+        embed = nextcord.Embed(title=f"{member.name} was banned", color=nextcord.Color.red())
+        embed.set_thumbnail(url=member.avatar)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.add_field(name="Banned by", value=ctx.author.mention, inline=False)
+        await channel.send(embed=embed)
 
-    @commands.command(aliases=['clear'])
+    @commands.command()
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def purge(self, ctx, amount: int):
         await ctx.channel.purge(limit=amount + 1)
         channel = self.client.get_channel(alertsChannel)
-        await channel.send(f'{ctx.author.mention} has purged {amount} messages')
+        Embed = nextcord.Embed(title=f"{ctx.author.name} purged {amount} messages", color=nextcord.Color.red())
+        Embed.set_thumbnail(url=ctx.author.avatar)
+        await channel.send(embed=Embed)
 
-    @commands.command(aliases=['esay', 'say', 'quote'])
-    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    @commands.command(alias=["-esay, e, quote"])
     async def embed(self, ctx, *, message):
-        await ctx.send(embed=nextcord.embeds.Embed(title="Embed", description=message, color=0x00ff00))
+        await ctx.message.delete()
+        await ctx.send(embed=nextcord.embeds.Embed(title="", description=message, color=0x00ff00))
 
-    @commands.command(aliases=['warn'])
+    @commands.command()
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def warn(self, ctx, member: nextcord.Member, *, reason=None):
         embed = nextcord.Embed(title="Warned Player", color=nextcord.Color.red())
@@ -66,7 +75,7 @@ class Staff(commands.Cog):
         channel = self.client.get_channel(alertsChannel)
         await channel.send(f'{member.mention} has been warned by {ctx.author.mention} for {reason}')
 
-    @commands.command(aliass=['shush'])
+    @commands.command()
     @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
     async def mute(self, ctx, member: nextcord.Member, *, reason=None):
         Guild = ctx.guild

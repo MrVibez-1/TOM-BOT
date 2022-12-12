@@ -4,7 +4,6 @@ from discord import Embed, Guild
 import nextcord
 import os
 import random
-import praw
 from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv("TOKEN") #pip install dotenv
@@ -55,27 +54,33 @@ for fn in os.listdir("./cogs"):
 async def load(ctx, extension):
     try:
         client.load_extension(f"cogs.{extension}")
-        await ctx.send(f"Loaded {extension}.")
+        Embed = nextcord.embeds.Embed(title="Loaded", description=f"Loaded {extension}", color=0x00ff00)
+        await ctx.send(embed=Embed)
     except Exception as e:
-        await ctx.send(f"Error loading {extension}: {e}")
+        Embed = nextcord.embeds.Embed(title="Error", description=f"Error loading {extension}: {e}", color=0xFF0000)
+        await ctx.send(embed=Embed)
 
 
 @client.command()
 async def unload(ctx, extension):
     try:
         client.unload_extension(f"cogs.{extension}")
-        await ctx.send(f"Unloaded {extension}.")
+        Embed = nextcord.embeds.Embed(title="Unloaded", description=f"Unloaded {extension}", color=0x00ff00)
+        await ctx.send(embed=Embed)
     except Exception as e:
-        await ctx.send(f"Error loading {extension}: {e}")
+        Embed = nextcord.embeds.Embed(title="Error", description=f"Error loading {extension}: {e}", color=0xFF0000)
+        await ctx.send(embed=Embed)
 
 
 @client.command()
 async def reload(ctx, extension):
     try:
         client.reload_extension(f"cogs.{extension}")
-        await ctx.send(f"Reloaded {extension}.")
+        Embed = nextcord.embeds.Embed(title="Reloaded", description=f"Reloaded {extension}", color=0x00ff00)
+        await ctx.send(embed=Embed)
     except Exception as e:
-        await ctx.send(f"Error loading {extension}: {e}")
+        Embed = nextcord.embeds.Embed(title="Error", description=f"Error loading {extension}: {e}", color=0xFF0000)
+        await ctx.send(embed=Embed)
         
 
 #Command Error
@@ -88,6 +93,7 @@ async def on_command_error(ctx, error):
 async def on_member_join(member):
     channel = client.get_channel(909105318276005919)
     Embed = nextcord.embeds.Embed(title="Welcome to the server!", description=f"{member.mention} has joined the server!", color=0x00ff00)
+    Embed.set_thumbnail(url="https://media.tenor.com/GIjIHvf3tq0AAAAC/my-nigga-high-five.gif")
     Embed.add_field(name="Member Count", value=f"{len(member.guild.members)}")
     await channel.send(embed=Embed)
 
@@ -108,117 +114,7 @@ async def help(ctx):
     Embed.add_field(name="📷 IMAGES", value="```Meme, pcomment, ytcomment```", inline=False)
     Embed.add_field(name="📚 INFO", value="```Shows this message```", inline=False)
     Embed.add_field(name="🤖 UTILITY", value="```Shows this message```", inline=False)
-    Embed.add_field(name="🔞 NSFW", value="```nsfw, ass , boobs, hentai```", inline=False)
+    Embed.add_field(name="🔞 NSFW", value="```no```", inline=False)
     await ctx.send(embed=Embed)
-
-#REDDIT COMMANDS
-
-reddit = praw.Reddit(
-    client_id="1NEAW_5USLdODfdYCjwibw",
-    client_secret="-jXfWNPUjUiAb-bFgJ0KKhEUUgT3UQ",
-    password="-wqdjqBG.FBPr:5",
-    user_agent="testscript by u/fakebot3",
-    username="MrVibezTV",
-)
-# IMAGE COMMANDS
-@client.command()
-async def meme(ctx, subreddit= "memes"):
-    subreddit = reddit.subreddit(subreddit)
-    all_subs = []
-    top = subreddit.top(limit= 100)
-    for submission in top:
-        all_subs.append(submission)
-    random_sub = random.choice(all_subs)
-    name = random_sub.title
-    url = random_sub.url
-    Embed = nextcord.embeds.Embed(title=name)
-    Embed.set_image(url=url)
-    await ctx.send(embed=Embed)
-
-@client.command(aliases=['hubcomments', 'pcomments'])
-async def pcomment(ctx,):
-    subreddit = reddit.subreddit("PornhubComments")
-    all_subs = []
-    top = subreddit.top(limit= 100)
-    for submission in top:
-        all_subs.append(submission)
-    random_sub = random.choice(all_subs)
-    name = random_sub.title
-    url = random_sub.url
-    Embed = nextcord.embeds.Embed(title=name)
-    Embed.set_image(url=url)
-    await ctx.send(embed=Embed)
-
-@client.command(aliases=['tubecomment', 'ycomment','tubecomments', 'ytcomments'])
-async def ytcomment(ctx,):
-    subreddit = reddit.subreddit("youtubecomments")
-    all_subs = []
-    top = subreddit.top(limit= 100)
-    for submission in top:
-        all_subs.append(submission)
-    random_sub = random.choice(all_subs)
-    name = random_sub.title
-    url = random_sub.url
-    Embed = nextcord.embeds.Embed(title=name)
-    Embed.set_image(url=url)
-    await ctx.send(embed=Embed)
-
-# NSFW COMMANDS
-@client.command()
-async def nsfw(ctx, subreddit= "collegesluts"):
-    subreddit = reddit.subreddit(subreddit)
-    all_subs = []
-    top = subreddit.top(limit= 100)
-    for submission in top:
-        all_subs.append(submission)
-    random_sub = random.choice(all_subs)
-    name = random_sub.title
-    url = random_sub.url
-    Embed = nextcord.embeds.Embed(title=name)
-    Embed.set_image(url=url)
-    await ctx.send(embed=Embed)
-
-@client.command()
-async def boobs(ctx,):
-    subreddit = reddit.subreddit("boobies")
-    all_subs = []
-    top = subreddit.top(limit= 100)
-    for submission in top:
-        all_subs.append(submission)
-    random_sub = random.choice(all_subs)
-    name = random_sub.title
-    url = random_sub.url
-    Embed = nextcord.embeds.Embed(title=name)
-    Embed.set_image(url=url)
-    await ctx.send(embed=Embed)
-
-@client.command()
-async def ass(ctx,):
-    subreddit = reddit.subreddit("ass")
-    all_subs = []
-    top = subreddit.top(limit= 100)
-    for submission in top:
-        all_subs.append(submission)
-    random_sub = random.choice(all_subs)
-    name = random_sub.title
-    url = random_sub.url
-    Embed = nextcord.embeds.Embed(title=name)
-    Embed.set_image(url=url)
-    await ctx.send(embed=Embed)
-
-@client.command()
-async def hentai(ctx,):
-    subreddit = reddit.subreddit("hentai")
-    all_subs = []
-    top = subreddit.top(limit= 100)
-    for submission in top:
-        all_subs.append(submission)
-    random_sub = random.choice(all_subs)
-    name = random_sub.title
-    url = random_sub.url
-    Embed = nextcord.embeds.Embed(title=name)
-    Embed.set_image(url=url)
-    await ctx.send(embed=Embed)
-
     
 client.run(TOKEN)
