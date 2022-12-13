@@ -10,7 +10,7 @@ class Staff(commands.Cog):
         super().__init__()
 
     @commands.command()
-    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    @commands.has_guild_permissions(kick_members=True)
     async def kick(self, ctx, member: nextcord.Member, *, reason=None):
         embed = nextcord.Embed(title="Kicked Player", color=nextcord.Color.red())
         embed.add_field(name="Player", value=member.mention, inline=False)
@@ -29,7 +29,7 @@ class Staff(commands.Cog):
         await channel.send(embed=embed)
 
     @commands.command()
-    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    @commands.has_guild_permissions(ban_members=True)
     async def ban(self, ctx, member: nextcord.Member, *, reason=None):
         embed = nextcord.Embed(title="Banned Player", color=nextcord.Color.red())
         embed.add_field(name="Player", value=member.mention, inline=False)
@@ -48,7 +48,7 @@ class Staff(commands.Cog):
         await channel.send(embed=embed)
 
     @commands.command()
-    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, amount: int):
         await ctx.channel.purge(limit=amount + 1)
         channel = self.client.get_channel(alertsChannel)
@@ -62,7 +62,7 @@ class Staff(commands.Cog):
         await ctx.send(embed=nextcord.embeds.Embed(title="", description=message, color=0x00ff00))
 
     @commands.command()
-    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    @commands.has_permissions(manage_messages=True)
     async def warn(self, ctx, member: nextcord.Member, *, reason=None):
         embed = nextcord.Embed(title="Warned Player", color=nextcord.Color.red())
         embed.add_field(name="Player", value=member.mention, inline=False)
@@ -72,10 +72,14 @@ class Staff(commands.Cog):
         embed.set_thumbnail(url=member.avatar)
         await ctx.send(embed=embed)
         channel = self.client.get_channel(alertsChannel)
-        await channel.send(f'{member.mention} has been warned by {ctx.author.mention} for {reason}')
-
+        embed = nextcord.Embed(title=f"{member.name} was warned", color=nextcord.Color.red())
+        embed.set_thumbnail(url=member.avatar)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.add_field(name="Warned by", value=ctx.author.mention, inline=False)
+        await channel.send(embed=embed)
+      
     @commands.command()
-    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    @commands.has_permissions(manage_messages=True)
     async def mute(self, ctx, member: nextcord.Member, *, reason=None):
         Guild = ctx.guild
         await member.add_roles(Guild.get_role(909158897577754634))
@@ -87,10 +91,14 @@ class Staff(commands.Cog):
         embed.set_thumbnail(url=member.avatar)
         await ctx.send(embed=embed)
         channel = self.client.get_channel(alertsChannel)
-        await channel.send(f'{member.mention} has been muted by {ctx.author.mention} for {reason}')
+        embed = nextcord.Embed(title=f"{member.name} was muted", color=nextcord.Color.red())
+        embed.set_thumbnail(url=member.avatar)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.add_field(name="Muted by", value=ctx.author.mention, inline=False)
+        await channel.send(embed=embed)
 
     @commands.command()
-    @commands.has_any_role("KING", "ADMIN", "CABBAGE", "HELPER")
+    @commands.has_permissions(manage_messages=True)
     async def unmute(self, ctx, member: nextcord.Member, *, reason=None):
         Guild = ctx.guild
         await member.remove_roles(Guild.get_role(909158897577754634))
@@ -102,7 +110,11 @@ class Staff(commands.Cog):
         embed.set_thumbnail(url=member.avatar)
         await ctx.send(embed=embed)
         channel = self.client.get_channel(alertsChannel)
-        await channel.send(f'{member.mention} has been unmuted by {ctx.author.mention} for {reason}')
+        embed = nextcord.Embed(title=f"{member.name} was unmuted", color=nextcord.Color.red())
+        embed.set_thumbnail(url=member.avatar)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.add_field(name="Unmuted by", value=ctx.author.mention, inline=False)
+        await channel.send(embed=embed)
 
 
 

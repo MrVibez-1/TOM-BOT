@@ -1,7 +1,6 @@
-from nextcord.ext import commands
 import nextcord
+from nextcord.ext import commands
 from config import alertsChannel
-
 
 class Logs(commands.Cog):
     def __init__(self, client):

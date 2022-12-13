@@ -1,20 +1,28 @@
+#Imports
 from ast import alias
 import nextcord
 import os
 import random
+import praw
+
+#Loading .env file
 from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv("TOKEN") #pip install dotenv
 
+#Bot Intents
 from nextcord import Client , Intents, Embed
 from nextcord.ext import commands 
 Intents = nextcord.Intents.all()
 client = commands.Bot(command_prefix='-', intents=Intents)
 client.remove_command('help')
 
-import praw
+#Reddit Commands
+reddit_client_id = os.getenv("REDDIT_CLIENT_ID")
+reddit_client_secret = os.getenv("REDDIT_CLIENT_SECRET")
+reddit_user_agent = os.getenv("REDDIT_USER_AGENT")
 
-reddit = praw.Reddit(client_id="1NEAW_5USLdODfdYCjwibw", client_secret="-jXfWNPUjUiAb-bFgJ0KKhEUUgT3UQ", user_agent="Alitom297#7175")
+reddit = praw.Reddit(client_id=reddit_client_id, client_secret=reddit_client_secret, user_agent=reddit_user_agent)
 
 @client.command()
 async def meme(ctx, subreddit: str):
@@ -29,10 +37,11 @@ async def meme(ctx, subreddit: str):
 @client.event
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(name="pornhub", type=nextcord.ActivityType.streaming, url="https://www.twitch.tv/mrvibez_1"))
-    print("\n / _ \ | |   |_   _| |_   _|  _  |  \/  | / __  \|  _  ||___  /\n/ /_\ \| |     | |     | | | | | | .  . | `' / /'| |_| |   / /\n|  _  || |     | |     | | | | | | |\/| |   / /  \____ |  / /  \n| | | || |_____| |_    | | \ \_/ / |  | | ./ /___.___/ /./ /  \n\_| |_/\_____/\___/    \_/  \___/\_|  |_/ \_____/\____/ \_/    \n                   By Alitom297#7175n")
+    print("\n / _ \ | |   |_   _| |_   _|  _  |  \/  | / __  \|  _  ||___  /\n/ /_\ \| |     | |     | | | | | | .  . | `' / /'| |_| |   / /\n|  _  || |     | |     | | | | | | |\/| |   / /  \____ |  / /  \n| | | || |_____| |_    | | \ \_/ / |  | | ./ /___.___/ /./ /  \n\_| |_/\_____/\___/    \_/  \___/\_|  |_/ \_____/\____/ \_/    \n                   By Alitom297#7175")
     print('Bot is ready!')
     print(f'We have logged in as {client.user}')
-    
+
+#Lavalink (Loads the music cog)
 client.load_extension("dismusic")
 client.lavalink_nodes = [
     {"host": "lava.link", "port": 80, "password": "test", "region": "eu",},
@@ -49,8 +58,7 @@ client.spotify_credentials = {
 
 #COGS
 #This cog system loads and unloads commands
-
-    
+   
 for fn in os.listdir("./cogs"):
     if fn.endswith(".py"):
         client.load_extension(f"cogs.{fn[:-3]}")
