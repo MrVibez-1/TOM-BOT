@@ -50,8 +50,8 @@ client.lavalink_nodes = [
 
 # If you want to use spotify search
 client.spotify_credentials = {
-    'client_id': '1b16502d5b4e47a2a40c8f71bb39aad8',
-    'client_secret': 'd0a1afd98c404a6584870dc170e2e334'
+    "client_id": "your_client_id",
+    "client_secret": "your_client_secret",
 }
     
 
