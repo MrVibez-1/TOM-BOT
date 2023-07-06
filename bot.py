@@ -3,7 +3,8 @@ from ast import alias
 import nextcord
 import os
 import random
-import praw
+import dotenv
+from dotenv import load_dotenv
 
 #Loading .env file
 from dotenv import load_dotenv
@@ -16,13 +17,6 @@ from nextcord.ext import commands
 Intents = nextcord.Intents.all()
 client = commands.Bot(command_prefix='-', intents=Intents)
 client.remove_command('help')
-
-#Reddit Commands
-reddit_client_id = os.getenv("REDDIT_CLIENT_ID")
-reddit_client_secret = os.getenv("REDDIT_CLIENT_SECRET")
-reddit_user_agent = os.getenv("REDDIT_USER_AGENT")
-
-reddit = praw.Reddit(client_id=reddit_client_id, client_secret=reddit_client_secret, user_agent=reddit_user_agent)
 
 @client.command()
 async def meme(ctx, subreddit: str):
@@ -40,21 +34,6 @@ async def on_ready():
     print("\n / _ \ | |   |_   _| |_   _|  _  |  \/  | / __  \|  _  ||___  /\n/ /_\ \| |     | |     | | | | | | .  . | `' / /'| |_| |   / /\n|  _  || |     | |     | | | | | | |\/| |   / /  \____ |  / /  \n| | | || |_____| |_    | | \ \_/ / |  | | ./ /___.___/ /./ /  \n\_| |_/\_____/\___/    \_/  \___/\_|  |_/ \_____/\____/ \_/    \n                   By Alitom297#7175")
     print('Bot is ready!')
     print(f'We have logged in as {client.user}')
-
-#Lavalink (Loads the music cog)
-client.load_extension("dismusic")
-client.lavalink_nodes = [
-    {"host": "lava.link", "port": 80, "password": "test", "region": "eu",},
-    # Can have multiple nodes here
-]
-
-# If you want to use spotify search
-client.spotify_credentials = {
-    "client_id": "your_client_id",
-    "client_secret": "your_client_secret",
-}
-    
-
 
 #COGS
 #This cog system loads and unloads commands
@@ -109,12 +88,6 @@ async def help(ctx):
     Embed = nextcord.embeds.Embed(title="Help", description="This is a list of commands for **Council of Goombingo**", color=random.randint(0, 0xffffff))
     Embed.add_field(name="👑 ADMIN", value="```Prefix, DM, Roleadd, Roleremove```", inline=False)
     Embed.add_field(name="🔧 MODERATION", value="```Kick, Ban, Embed, Warn, Mute, Unmute```", inline=False)
-    Embed.add_field(name="🎶 MUSIC", value="```Connect, disconnect, play, pause, resume, seek, nowplaying, queue, volume, loop```", inline=False)
-    Embed.add_field(name="✨ FUN", value="```Ping, Weather```", inline=False)
-    Embed.add_field(name="📷 IMAGES", value="```Meme, pcomment, ytcomment```", inline=False)
-    Embed.add_field(name="📚 INFO", value="```Shows this message```", inline=False)
-    Embed.add_field(name="🤖 UTILITY", value="```Shows this message```", inline=False)
-    Embed.add_field(name="🔞 NSFW", value="```no```", inline=False)
     await ctx.send(embed=Embed)
 
 
